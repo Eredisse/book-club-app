@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Table(name="book_rental")
 @Entity
@@ -20,9 +21,9 @@ public class BookRental {
 
     private Long bookId;
 
-    private LocalDate rentalTime;
+    private LocalDateTime rentalTime;
 
-    private LocalDate expectedReturnTime;
+    private LocalDateTime expectedReturnTime;
 
-    private LocalDate actualReturnTime;
+    private LocalDateTime actualReturnTime;
 }
