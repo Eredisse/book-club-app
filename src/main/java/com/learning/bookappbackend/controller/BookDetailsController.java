@@ -3,6 +3,7 @@ package com.learning.bookappbackend.controller;
 import com.learning.bookappbackend.model.BookDetails;
 import com.learning.bookappbackend.service.BookDetailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

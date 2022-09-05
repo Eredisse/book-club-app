@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class BookController {
 
-    private final BookService bookService;
-
-    @PostMapping()
-    private Book addBook(@RequestBody AddBookRequestDTO requestDTO) {
-        return bookService.addBook(requestDTO);
-    }
+//    private final BookService bookService;
+//
+//    @PostMapping()
+//    private Book addBook(@RequestBody AddBookRequestDTO requestDTO) {
+//        return bookService.addBook(requestDTO);
+//    }
 
 }

@@ -16,9 +16,9 @@ public class BookRental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long user_id;
+    private Long userId;
 
-    private Long book_id;
+    private Long bookId;
 
     private LocalDate rentalTime;
 

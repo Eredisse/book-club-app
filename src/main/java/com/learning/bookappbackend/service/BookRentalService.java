@@ -26,7 +26,7 @@ public class BookRentalService {
         Book book = bookRepo.findById(bookRentalDTO.getBookId()).orElseThrow(
                 () -> new Exception("Cartea nu există!"));
         List <BookRental> activeRentals = bookRentalRepo
-                .findAllByBook_idAndActualReturnTimeIsNull(book.getId());
+                .findAllByBookIdAndActualReturnTimeIsNull(book.getId());
 
         if(!book.getIsAvailable() || activeRentals != null || activeRentals.isEmpty()) {
             throw new Exception("Cartea este deja împrumutată!");
