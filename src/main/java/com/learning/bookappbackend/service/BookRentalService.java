@@ -1,10 +1,12 @@
 package com.learning.bookappbackend.service;
 
 import com.learning.bookappbackend.dto.BookRentalDTO;
+import com.learning.bookappbackend.dto.BookRentalDetailsDTO;
 import com.learning.bookappbackend.mapper.BookRentalMapper;
 import com.learning.bookappbackend.model.Book;
 import com.learning.bookappbackend.model.BookRental;
 import com.learning.bookappbackend.model.User;
+import com.learning.bookappbackend.repo.BookDetailsRepo;
 import com.learning.bookappbackend.repo.BookRentalRepo;
 import com.learning.bookappbackend.repo.BookRepo;
 import com.learning.bookappbackend.repo.UserRepo;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +26,7 @@ public class BookRentalService {
     private final BookRepo bookRepo;
     private final BookRentalMapper bookRentalMapper;
     private final UserRepo userRepo;
+    private final BookDetailsRepo bookDetailsRepo;
 
     @Transactional
     public BookRentalDTO rentBook(BookRentalDTO bookRentalDTO) throws Exception {
@@ -47,6 +51,15 @@ public class BookRentalService {
 
     public List<BookRental> getAll() {
         return bookRentalRepo.findAll();
+    }
+
+    public List<BookRentalDetailsDTO> getAllActive() {
+        List<BookRental> bookRentals = bookRentalRepo.findAll();
+        return bookRentals.stream()
+                .map(rental -> new BookRentalDetailsDTO(
+                                rental,
+                                bookDetailsRepo.findById(rental.getBookId()).get())
+                ).collect(Collectors.toList());
     }
 
 

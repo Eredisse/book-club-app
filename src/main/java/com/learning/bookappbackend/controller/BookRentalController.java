@@ -1,6 +1,7 @@
 package com.learning.bookappbackend.controller;
 
 import com.learning.bookappbackend.dto.BookRentalDTO;
+import com.learning.bookappbackend.dto.BookRentalDetailsDTO;
 import com.learning.bookappbackend.model.BookRental;
 import com.learning.bookappbackend.service.BookRentalService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,11 @@ public class BookRentalController {
     @GetMapping()
     public List<BookRental> getAll() {
         return bookRentalService.getAll();
+    }
+
+    @GetMapping("/active")
+    public List<BookRentalDetailsDTO> getAllActive() {
+        return bookRentalService.getAllActive();
     }
 
     @PostMapping
