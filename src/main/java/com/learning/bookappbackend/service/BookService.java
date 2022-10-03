@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,6 +48,10 @@ public class BookService {
         newBook.setOwner(user);
 
         return bookRepo.save(newBook);
+    }
+
+    public List<Book> getAllBooks() {
+        return bookRepo.findAll();
     }
 
 }

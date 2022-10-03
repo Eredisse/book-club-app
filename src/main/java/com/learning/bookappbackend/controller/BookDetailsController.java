@@ -16,7 +16,7 @@ public class BookDetailsController {
     private final BookDetailService bookDetailService;
 
     @GetMapping()
-    public List<BookDetails> getAllBooks() {
+    public List<BookDetails> getAllBookDetails() {
         return bookDetailService.getAllBookDetails();
     }
 
