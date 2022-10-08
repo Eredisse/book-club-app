@@ -4,9 +4,14 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +24,9 @@ public class JwtTokenUtil {
 
     @Value("${jwt.secret}")
     private String secret;
+
+    @Value("${book.app.jwtCookieName}")
+    private String jwtCookie;
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -52,5 +60,25 @@ public class JwtTokenUtil {
 
     private Date getExpirationDateFromToken(String jwtToken) {
         return getClaimFromToken(jwtToken, Claims::getExpiration);
+    }
+
+    public String getJwtFromCookies(HttpServletRequest request) {
+        Cookie cookie = WebUtils.getCookie(request, jwtCookie);
+        if (cookie != null) {
+            return cookie.getValue();
+        } else {
+            return null;
+        }
+    }
+
+    public ResponseCookie generateJwtCookie(UserDetails userPrincipal) {
+        String jwt = generateToken(userPrincipal);
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(24 * 60 * 60).httpOnly(true).build();
+        return cookie;
+    }
+
+    public ResponseCookie getCleanJwtCookie() {
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/").build();
+        return cookie;
     }
 }

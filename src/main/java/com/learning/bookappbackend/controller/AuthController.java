@@ -7,7 +7,9 @@ import com.learning.bookappbackend.service.CustomUserDetailsService;
 import com.learning.bookappbackend.service.UserService;
 import com.learning.bookappbackend.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -52,5 +54,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<User> save(@Valid @RequestBody User user) {
         return new ResponseEntity<User>(userService.addUser(user), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/sign-out")
+    public ResponseEntity<?> logoutUser() {
+        ResponseCookie cookie = jwtTokenUtil.getCleanJwtCookie();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body("You've been signed out!");
     }
 }

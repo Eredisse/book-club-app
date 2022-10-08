@@ -1,5 +1,6 @@
 package com.learning.bookappbackend.model;
 
+import com.learning.bookappbackend.enums.UserRoleEnum;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,5 +28,8 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private UserRoleEnum role;
 
 }
