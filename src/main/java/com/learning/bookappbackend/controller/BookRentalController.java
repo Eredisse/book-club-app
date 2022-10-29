@@ -30,4 +30,9 @@ public class BookRentalController {
     public BookRentalDTO rentBook(@RequestBody BookRentalDTO bookRentalDTO) throws Exception {
        return bookRentalService.rentBook(bookRentalDTO);
     }
+
+    @PutMapping("/rent-book/{rentalId}")
+    public BookRental returnBook(@PathVariable Long rentalId) throws Exception {
+        return bookRentalService.returnBook(rentalId);
+    }
 }

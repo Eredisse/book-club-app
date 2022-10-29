@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class BookRentalDetailsDTO{
+
     BookRental bookRentalDTO;
+
     BookDetails bookDetails;
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,7 @@ public class BookRentalService {
     private final BookRentalMapper bookRentalMapper;
     private final UserRepo userRepo;
     private final BookDetailsRepo bookDetailsRepo;
+    private final BookService bookService;
 
     @Transactional
     public BookRentalDTO rentBook(BookRentalDTO bookRentalDTO) throws Exception {
@@ -62,6 +64,18 @@ public class BookRentalService {
                 ).collect(Collectors.toList());
     }
 
+    @Transactional
+    public BookRental returnBook(Long rentalId) throws Exception{
 
+        BookRental bookRental = bookRentalRepo.findById(rentalId).orElseThrow(
+                () -> new Exception("Imprumutul nu exista"));
 
+        bookRental.setActualReturnTime(LocalDateTime.now());
+        bookRentalRepo.save(bookRental);
+
+        Long bookId = bookRental.getBookId();
+        bookService.markBookAvailable(bookId);
+
+        return bookRental;
+    }
 }

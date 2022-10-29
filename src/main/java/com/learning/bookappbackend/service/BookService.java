@@ -19,7 +19,6 @@ import java.util.Optional;
 public class BookService {
 
     private final BookRepo bookRepo;
-    private final BookDetailService bookDetailService;
     private final BookDetailsRepo bookDetailsRepo;
     private final UserRepo userRepo;
 
@@ -52,6 +51,13 @@ public class BookService {
 
     public List<Book> getAllBooks() {
         return bookRepo.findAll();
+    }
+
+    public void markBookAvailable(Long bookId) throws Exception {
+        Book book = bookRepo.findById(bookId).orElseThrow(
+                () -> new Exception("Cartea nu există!"));
+        book.setIsAvailable(true);
+        bookRepo.save(book);
     }
 
 }
